@@ -1,0 +1,38 @@
+<h5>
+  Resultados de búsqueda para <strong>"{{ term }}"</strong>
+</h5>
+
+<section class="flex flex-wrap gap-4 mt-5">
+  <strong class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg">
+    📱 Smartphones
+    <small>(5)</small>
+  </strong>
+  <strong class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg">
+    🌸 Fragances
+    <small>(2)</small>
+  </strong>
+</section>
+
+<section class="grid gap-8 mt-5 sm:grid-cols-2">
+  <article
+    *ngFor="let product of data"
+    class="grid grid-cols-2 gap-x-3 items-center justify-items-center border border-black dark:border-gray-300 py-4 px-3 hover:scale-105 transition-all duration-300 cursor-pointer hover:bg-gray-500/10"
+    [routerLink]="['/items', product.id]"
+  >
+    <img
+      class="rounded-full w-32 h-32 object-cover"
+      [src]="product.thumbnail"
+      [alt]="'Imagen del producto ' + product.title"
+    />
+    <div class="grid gap-2">
+      <a class="text-xl font-bold" [routerLink]="['/items', product.id]">{{ product.title | titlecase }}</a>
+      <p class="text-sm break-words">
+        {{ product.description | slice : 0 : 50 }}...
+      </p>
+      <h3 class="text-xl font-bold">
+        {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
+      </h3>
+      ⭐⭐⭐⭐⭐
+    </div>
+  </article>
+</section>

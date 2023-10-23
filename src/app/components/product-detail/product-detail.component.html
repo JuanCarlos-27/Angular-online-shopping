@@ -1,0 +1,75 @@
+<section
+  class="max-w-md m-auto h-full grid gap-4 place-content-center sm:place-content-start"
+>
+  <picture class="grid gap-4 justify-items-center items-center">
+    <img
+      class="rounded-full w-48 h-48 object-cover border aspect-auto"
+      [src]="'https://i.dummyjson.com/data/products/2/thumbnail.jpg'"
+      alt="'Imagen del producto.."
+    />
+    <div class="flex justify-between gap-3">
+      <img
+        class="border rounded-full w-16 h-16 object-cover"
+        src="https://i.dummyjson.com/data/products/2/1.jpg"
+        alt=""
+      />
+      <img
+        class="border rounded-full w-16 h-16 object-cover"
+        src="https://i.dummyjson.com/data/products/2/2.jpg"
+        alt=""
+      />
+      <img
+        class="border rounded-full w-16 h-16 object-cover"
+        src="https://i.dummyjson.com/data/products/2/3.jpg"
+        alt=""
+      />
+    </div>
+  </picture>
+
+  <article
+    class="grid grid-cols-2 grid-rows-2 justify-items-center items-center px-5"
+  >
+    <h2 class="font-bold text-3xl text-center col-span-2">iPhone X - Apple</h2>
+    <div class="text-center">
+      <h3 class="text-2xl font-bold">$899</h3>
+      <strong>2 disponibles</strong>
+    </div>
+    <div>⭐⭐⭐⭐⭐</div>
+  </article>
+
+  <article class="mt-4 text-sm m-auto flex flex-col gap-9">
+    <p>
+      SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED
+      technology A12 Bionic chip with ...
+    </p>
+    <div class="flex gap-6">
+      <button class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40" (click)="goBack()">
+        <ng-container *ngTemplateOutlet="goBackIcon"></ng-container>
+      </button>
+      <button
+        class="flex-1 bg-orange-400 font-bold dark:text-black px-7 py-2 rounded-3xl hover:bg-orange-300 text-lg"
+      >
+        Añadir al carrito
+      </button>
+    </div>
+  </article>
+</section>
+
+<ng-template #goBackIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-arrow-back-up"
+    width="44"
+    height="44"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 14l-4 -4l4 -4" />
+    <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+  </svg>
+</ng-template>
