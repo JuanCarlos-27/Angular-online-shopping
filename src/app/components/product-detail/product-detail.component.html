@@ -1,27 +1,24 @@
 <section
-  class="max-w-md m-auto h-full grid gap-4 place-content-center sm:place-content-start"
+  *ngIf="product()"
+  class="max-w-md m-auto h-full grid gap-4 place-content-center justify-center"
 >
   <picture class="grid gap-4 justify-items-center items-center">
     <img
       class="rounded-full w-48 h-48 object-cover border aspect-auto"
-      [src]="'https://i.dummyjson.com/data/products/2/thumbnail.jpg'"
+      [src]="product()?.thumbnail"
       alt="'Imagen del producto.."
     />
     <div class="flex justify-between gap-3">
       <img
+        *ngFor="let image of product()?.images | slice : 0 : 3; let i = index"
         class="border rounded-full w-16 h-16 object-cover"
-        src="https://i.dummyjson.com/data/products/2/1.jpg"
-        alt=""
-      />
-      <img
-        class="border rounded-full w-16 h-16 object-cover"
-        src="https://i.dummyjson.com/data/products/2/2.jpg"
-        alt=""
-      />
-      <img
-        class="border rounded-full w-16 h-16 object-cover"
-        src="https://i.dummyjson.com/data/products/2/3.jpg"
-        alt=""
+        [src]="image"
+        [alt]="
+          'Imagen de referencia ' +
+          (i + 1) +
+          ' del producto ' +
+          product()?.title
+        "
       />
     </div>
   </picture>
@@ -29,21 +26,37 @@
   <article
     class="grid grid-cols-2 grid-rows-2 justify-items-center items-center px-5"
   >
-    <h2 class="font-bold text-3xl text-center col-span-2">iPhone X - Apple</h2>
+    <h2 class="font-bold text-3xl text-center col-span-2">
+      {{ product()?.title }} - {{ product()?.brand }}
+    </h2>
     <div class="text-center">
-      <h3 class="text-2xl font-bold">$899</h3>
-      <strong>2 disponibles</strong>
+      <h3 class="text-2xl font-bold">
+        {{ product()?.price | currency : "USD" }}
+      </h3>
+      <ng-container [ngPlural]="product()?.stock ?? 0">
+        <ng-template ngPluralCase="=0">
+          <strong>0 disponibles</strong></ng-template
+        >
+        <ng-template ngPluralCase="=1">
+          <strong>1 disponible</strong></ng-template
+        >
+        <ng-template ngPluralCase="other">
+          <strong>{{ product()?.stock }} disponibles</strong></ng-template
+        >
+      </ng-container>
     </div>
     <div>⭐⭐⭐⭐⭐</div>
   </article>
 
   <article class="mt-4 text-sm m-auto flex flex-col gap-9">
     <p>
-      SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED
-      technology A12 Bionic chip with ...
+      {{ product()?.description }}
     </p>
     <div class="flex gap-6">
-      <button class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40" (click)="goBack()">
+      <button
+        class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40"
+        (click)="goBack()"
+      >
         <ng-container *ngTemplateOutlet="goBackIcon"></ng-container>
       </button>
       <button

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "angular-online-shopping-851bc"
+  },
+  "targets": {
+    "angular-online-shopping-851bc": {
+      "hosting": {
+        "angular-online-shopping": [
+          "angular-online-shopping-851bc"
+        ]
+      }
+    }
+  }
+}

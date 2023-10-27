@@ -3,36 +3,65 @@
 </h5>
 
 <section class="flex flex-wrap gap-4 mt-5">
-  <strong class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg">
-    📱 Smartphones
-    <small>(5)</small>
-  </strong>
-  <strong class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg">
-    🌸 Fragances
-    <small>(2)</small>
+  <strong
+    *ngFor="let item of categories() | keyvalue"
+    class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg"
+  >
+    {{ item.key }}
+    <small>({{ item.value }})</small>
   </strong>
 </section>
 
 <section class="grid gap-8 mt-5 sm:grid-cols-2">
-  <article
-    *ngFor="let product of data"
-    class="grid grid-cols-2 gap-x-3 items-center justify-items-center border border-black dark:border-gray-300 py-4 px-3 hover:scale-105 transition-all duration-300 cursor-pointer hover:bg-gray-500/10"
-    [routerLink]="['/items', product.id]"
-  >
-    <img
-      class="rounded-full w-32 h-32 object-cover"
-      [src]="product.thumbnail"
-      [alt]="'Imagen del producto ' + product.title"
-    />
-    <div class="grid gap-2">
-      <a class="text-xl font-bold" [routerLink]="['/items', product.id]">{{ product.title | titlecase }}</a>
-      <p class="text-sm break-words">
-        {{ product.description | slice : 0 : 50 }}...
-      </p>
-      <h3 class="text-xl font-bold">
-        {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
+  <ng-container *ngIf="isLoading; else loadedState">
+    <ng-container *ngTemplateOutlet="loadingState" />
+  </ng-container>
+  <ng-template #loadedState>
+    <ng-container *ngIf="products().length === 0; else productsState">
+      <h3 class="text-2xl font-bold text-center col-span-2">
+        No se encontraron resultados 😕
       </h3>
-      ⭐⭐⭐⭐⭐
+    </ng-container>
+
+    <ng-template #productsState>
+      <article
+        *ngFor="let product of products()"
+        class="grid grid-cols-2 gap-x-3 items-center justify-items-center border border-black dark:border-gray-300 py-4 px-3 hover:scale-105 transition-all duration-300 cursor-pointer hover:bg-gray-500/10"
+        [routerLink]="['/items', product.id]"
+      >
+        <img
+          class="rounded-full w-32 h-32 object-cover"
+          [src]="product.thumbnail"
+          [alt]="'Imagen del producto ' + product.title"
+        />
+        <div class="grid gap-2">
+          <a class="text-xl font-bold" [routerLink]="['/items', product.id]">{{
+            product.title | titlecase
+          }}</a>
+          <p class="text-sm break-words">
+            {{ product.description | slice : 0 : 50 }}...
+          </p>
+          <h3 class="text-xl font-bold">
+            {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
+          </h3>
+          ⭐⭐⭐⭐⭐
+        </div>
+      </article>
+    </ng-template>
+  </ng-template>
+</section>
+
+<ng-template #loadingState>
+  <article
+    *ngFor="let item of [1, 2, 3, 4]"
+    class="grid grid-cols-2 gap-x-3 items-center justify-items-center border border-black dark:border-gray-300 py-4 px-3 hover:scale-105 transition-all duration-300 cursor-pointer hover:bg-gray-500/10 animate-pulse"
+  >
+    <div class="rounded-full w-32 h-32 bg-gray-300"></div>
+    <div class="grid gap-2">
+      <div class="h-4 bg-gray-300 rounded"></div>
+      <div class="h-4 bg-gray-300 rounded"></div>
+      <div class="h-4 bg-gray-300 rounded"></div>
+      <div class="h-4 bg-gray-300 rounded"></div>
     </div>
   </article>
-</section>
+</ng-template>
