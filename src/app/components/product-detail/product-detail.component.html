@@ -45,7 +45,7 @@
         >
       </ng-container>
     </div>
-    <div>⭐⭐⭐⭐⭐</div>
+    <app-stars [rating]="product()?.rating ?? 0" />
   </article>
 
   <article class="mt-4 text-sm m-auto flex flex-col gap-9">

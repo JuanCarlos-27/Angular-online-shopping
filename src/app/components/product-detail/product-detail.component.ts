@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product.interface';
+import { StarsComponent } from '../stars/stars.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, StarsComponent],
   templateUrl: './product-detail.component.html'
 })
 export default class ProductDetailComponent {
@@ -19,7 +20,6 @@ export default class ProductDetailComponent {
     this.route.params.subscribe(params => {
      const { id } = params;
      if(!id) return;
-
       this.getProduct(Number(id));
     });
   }
@@ -35,7 +35,6 @@ export default class ProductDetailComponent {
     try {
       const response = await this.productService.getProductById(id);
       this.product.set(response);
-      console.log(this.product()?.thumbnail)
     } catch (error) {
       console.log(error);
     } finally {

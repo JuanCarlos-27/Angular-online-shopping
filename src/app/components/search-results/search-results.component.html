@@ -5,7 +5,7 @@
 <section class="flex flex-wrap gap-4 mt-5">
   <strong
     *ngFor="let item of categories() | keyvalue"
-    class="dark:bg-white/20 bg-orange-400 text-white py-1 px-4 rounded-lg"
+    class="dark:bg-white/20 dark:border-2 dark:border-gray-300 border-2 border-black bg-orange-400 text-white py-1 px-4 rounded-lg"
   >
     {{ item.key }}
     <small>({{ item.value }})</small>
@@ -44,7 +44,7 @@
           <h3 class="text-xl font-bold">
             {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
           </h3>
-          ⭐⭐⭐⭐⭐
+          <app-stars [rating]="product.rating" />
         </div>
       </article>
     </ng-template>

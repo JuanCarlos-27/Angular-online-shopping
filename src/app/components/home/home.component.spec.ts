@@ -24,12 +24,8 @@ describe('HomeComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should redirect to /items?search= when search is called', async () => {
-    const search = 'test';
+    const search = 'phones';
     const routerSpy = spyOn(router, 'navigate');
 
     const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -41,6 +37,14 @@ describe('HomeComponent', () => {
     formElement.dispatchEvent(new Event('submit'));
 
     expect(routerSpy).toHaveBeenCalledWith(['/items'], { queryParams: { search } });
+  });
 
+  it('should not redirect when input is empty', async () => {
+    const routerSpy = spyOn(router, 'navigate');
+
+    const formElement = fixture.debugElement.query(By.css('form')).nativeElement;
+    formElement.dispatchEvent(new Event('submit'));
+
+    expect(routerSpy).not.toHaveBeenCalled();
   });
 });

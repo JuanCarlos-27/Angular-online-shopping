@@ -4,10 +4,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AppService } from 'src/app/services/app.service';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product.service';
+import { StarsComponent } from '../stars/stars.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, StarsComponent],
   templateUrl: './search-results.component.html',
 })
 export default class SearchResultsComponent {

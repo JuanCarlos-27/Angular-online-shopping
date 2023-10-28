@@ -10,11 +10,8 @@ export class ProductService {
 
   private firestore = inject(Firestore);
   private collection = collection(this.firestore, 'products')
-  items$: Observable<any[]> | undefined
-
 
   async getProductsByQuery(term: string) {
-    // const q = query(this.collection, where('title', '', term));
     const response = await getDocs(this.collection)
 
     const filtered = response.docs.filter(doc => {
