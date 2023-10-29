@@ -1,72 +1,77 @@
-<section
-  *ngIf="product()"
-  class="max-w-md m-auto h-full grid gap-4 place-content-center justify-center"
->
-  <picture class="grid gap-4 justify-items-center items-center">
-    <img
-      class="rounded-full w-48 h-48 object-cover border aspect-auto"
-      [src]="product()?.thumbnail"
-      alt="'Imagen del producto.."
-    />
-    <div class="flex justify-between gap-3">
-      <img
-        *ngFor="let image of product()?.images | slice : 0 : 3; let i = index"
-        class="border rounded-full w-16 h-16 object-cover"
-        [src]="image"
-        [alt]="
-          'Imagen de referencia ' +
-          (i + 1) +
-          ' del producto ' +
-          product()?.title
-        "
-      />
-    </div>
-  </picture>
+<ng-container *ngIf="isLoading; else loadedState">
+  <ng-container *ngTemplateOutlet="loadingState" />
+</ng-container>
 
-  <article
-    class="grid grid-cols-2 grid-rows-2 justify-items-center items-center px-5"
+<ng-template #loadedState>
+  <section
+    *ngIf="product()"
+    class="max-w-md m-auto h-full grid gap-4 place-content-center justify-center"
   >
-    <h2 class="font-bold text-3xl text-center col-span-2">
-      {{ product()?.title }} - {{ product()?.brand }}
-    </h2>
-    <div class="text-center">
-      <h3 class="text-2xl font-bold">
-        {{ product()?.price | currency : "USD" }}
-      </h3>
-      <ng-container [ngPlural]="product()?.stock ?? 0">
-        <ng-template ngPluralCase="=0">
-          <strong>0 disponibles</strong></ng-template
-        >
-        <ng-template ngPluralCase="=1">
-          <strong>1 disponible</strong></ng-template
-        >
-        <ng-template ngPluralCase="other">
-          <strong>{{ product()?.stock }} disponibles</strong></ng-template
-        >
-      </ng-container>
-    </div>
-    <app-stars [rating]="product()?.rating ?? 0" />
-  </article>
+    <picture class="grid gap-4 justify-items-center items-center">
+      <img
+        class="rounded-full w-48 h-48 object-cover border aspect-auto"
+        [src]="product()?.thumbnail"
+        [alt]="'Imagen del producto' + product()?.title"
+      />
+      <div class="flex justify-between gap-3">
+        <img
+          *ngFor="let image of product()?.images | slice : 0 : 3; let i = index"
+          class="border rounded-full w-16 h-16 object-cover"
+          [src]="image"
+          [alt]="
+            'Imagen de referencia ' +
+            (i + 1) +
+            ' del producto ' +
+            product()?.title
+          "
+        />
+      </div>
+    </picture>
+    <article
+      class="grid grid-cols-2 grid-rows-2 justify-items-center items-center px-5"
+    >
+      <h2 class="font-bold text-3xl text-center col-span-2">
+        {{ product()?.title }} - {{ product()?.brand }}
+      </h2>
+      <div class="text-center">
+        <h3 class="text-2xl font-bold">
+          {{ product()?.price | currency : "USD" }}
+        </h3>
+        <ng-container [ngPlural]="product()?.stock ?? 0">
+          <ng-template ngPluralCase="=0">
+            <strong>0 disponibles</strong>
+          </ng-template>
+          <ng-template ngPluralCase="=1">
+            <strong>1 disponible</strong>
+          </ng-template>
+          <ng-template ngPluralCase="other">
+            <strong> {{ product()?.stock }} disponibles</strong>
+          </ng-template>
+        </ng-container>
+      </div>
+      <app-stars [rating]="product()?.rating ?? 0" />
+    </article>
 
-  <article class="mt-4 text-sm m-auto flex flex-col gap-9">
-    <p>
-      {{ product()?.description }}
-    </p>
-    <div class="flex gap-6">
-      <button
-        class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40"
-        (click)="goBack()"
-      >
-        <ng-container *ngTemplateOutlet="goBackIcon"></ng-container>
-      </button>
-      <button
-        class="flex-1 bg-orange-400 font-bold dark:text-black px-7 py-2 rounded-3xl hover:bg-orange-300 text-lg"
-      >
-        Añadir al carrito
-      </button>
-    </div>
-  </article>
-</section>
+    <article class="mt-4 text-sm m-auto flex flex-col gap-9">
+      <p>
+        {{ product()?.description }}
+      </p>
+      <div class="flex gap-6">
+        <button
+          class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40"
+          (click)="goBack()"
+        >
+          <ng-container *ngTemplateOutlet="goBackIcon" />
+        </button>
+        <button
+          class="flex-1 bg-orange-400 font-bold dark:text-black px-7 py-2 rounded-3xl hover:bg-orange-300 text-lg"
+        >
+          Añadir al carrito
+        </button>
+      </div>
+    </article>
+  </section>
+</ng-template>
 
 <ng-template #goBackIcon>
   <svg
@@ -85,4 +90,31 @@
     <path d="M9 14l-4 -4l4 -4" />
     <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
   </svg>
+</ng-template>
+
+<ng-template #loadingState>
+  <div class="animate-pulse">
+    <div class="grid gap-4 justify-items-center items-center">
+      <div class="w-48 h-48 rounded-full bg-gray-300 border"></div>
+      <div class="flex justify-between gap-3">
+        <div class="rounded-full w-16 h-16 border bg-gray-300"></div>
+        <div class="rounded-full w-16 h-16 border bg-gray-300"></div>
+        <div class="rounded-full w-16 h-16 border bg-gray-300"></div>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-2 grid-rows-2 justify-items-center items-center px-5 mt-3"
+    >
+      <div class="col-span-2 w-full h-8 rounded-full bg-gray-300"></div>
+      <div>
+        <div class="w-36 h-8 rounded-full bg-gray-300"></div>
+        <div class="w-36 h-8 rounded-full bg-gray-300 mt-2"></div>
+      </div>
+      <div class="w-full h-8 rounded-full bg-gray-300 mt-2"></div>
+    </div>
+    <div class="w-full mt-4 m-auto flex justify-center gap-6">
+      <div class="w-full h-8 rounded-full bg-gray-300"></div>
+      <div class="flex-1 px-7 py-2 bg-gray-300 rounded-3xl"></div>
+    </div>
+  </div>
 </ng-template>

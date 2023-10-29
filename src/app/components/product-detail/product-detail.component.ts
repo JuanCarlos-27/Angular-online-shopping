@@ -9,7 +9,7 @@ import { StarsComponent } from '../stars/stars.component';
   selector: 'app-product-detail',
   standalone: true,
   imports: [CommonModule, RouterLink, StarsComponent],
-  templateUrl: './product-detail.component.html'
+  templateUrl: './product-detail.component.html',
 })
 export default class ProductDetailComponent {
 
@@ -18,8 +18,8 @@ export default class ProductDetailComponent {
 
   constructor() {
     this.route.params.subscribe(params => {
-     const { id } = params;
-     if(!id) return;
+      const { id } = params;
+      if (!id) return;
       this.getProduct(Number(id));
     });
   }

@@ -2,14 +2,18 @@
   Resultados de búsqueda para <strong>"{{ term }}"</strong>
 </h5>
 
-<section class="flex flex-wrap gap-4 mt-5">
-  <strong
-    *ngFor="let item of categories() | keyvalue"
-    class="dark:bg-white/20 dark:border-2 dark:border-gray-300 border-2 border-black bg-orange-400 text-white py-1 px-4 rounded-lg"
-  >
-    {{ item.key }}
-    <small>({{ item.value }})</small>
-  </strong>
+<section class="flex flex-wrap gap-5 mt-5">
+  <app-category-badge
+    *ngFor="let item of categories() | keyvalue; let i = index"
+    class="hover:scale-105 transition-all duration-300 cursor-pointer"
+    [ngClass]="{
+      'hover:-rotate-1': i % 2 === 0,
+      'hover:rotate-1': i % 2 !== 0
+    }"
+    [item]="item"
+    [products]="products()"
+    (onEmitCategory)="onSelectCategory($event)"
+  />
 </section>
 
 <section class="grid gap-8 mt-5 sm:grid-cols-2">

@@ -5,10 +5,11 @@ import { AppService } from 'src/app/services/app.service';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product.service';
 import { StarsComponent } from '../stars/stars.component';
+import { CategoryBadgeComponent } from '../category-badge/category-badge.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterLink, StarsComponent],
+  imports: [CommonModule, RouterLink, StarsComponent, CategoryBadgeComponent],
   templateUrl: './search-results.component.html',
 })
 export default class SearchResultsComponent {
@@ -31,10 +32,10 @@ export default class SearchResultsComponent {
   public products = signal<Product[]>([]);
 
   public categories = computed(() => {
-    const categories: { [key: string]: number } = {};
+    const categories: { [key: string]: number } = { "Todos": this.productService.products.length };
     const products = this.products();
-    for(const product of products) {
-      categories[product.category] =  categories[product.category] ? categories[product.category] + 1 : 1;
+    for (const product of products) {
+      categories[product.category] = categories[product.category] ? categories[product.category] + 1 : 1;
     }
     return categories
   });
@@ -50,6 +51,10 @@ export default class SearchResultsComponent {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  onSelectCategory(products: Product[]) {
+    this.products.set(products);
   }
 
   // async addNewProduct() {

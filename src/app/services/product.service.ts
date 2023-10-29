@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { Product } from '../models/product.interface';
 import { Observable } from 'rxjs';
@@ -9,7 +9,12 @@ import { Observable } from 'rxjs';
 export class ProductService {
 
   private firestore = inject(Firestore);
-  private collection = collection(this.firestore, 'products')
+  private collection = collection(this.firestore, 'products');
+  private _products = signal<Product[]>([]);
+
+  get products() {
+    return this._products();
+  }
 
   async getProductsByQuery(term: string) {
     const response = await getDocs(this.collection)
@@ -19,7 +24,10 @@ export class ProductService {
       return title.toLowerCase().includes(term.toLowerCase()) || category.toLowerCase().includes(term.toLowerCase())
     })
 
-    return filtered.map(doc => doc.data()) as Product[];
+    const products = filtered.map(doc => doc.data()) as Product[];
+
+    this._products.set(products);
+    return products;
   }
 
   async getProductById(id: number) {
