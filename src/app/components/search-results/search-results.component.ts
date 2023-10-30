@@ -56,30 +56,4 @@ export default class SearchResultsComponent {
   onSelectCategory(products: Product[]) {
     this.products.set(products);
   }
-
-  // async addNewProduct() {
-  //   const productRef = collection(this.firestore, 'products');
-
-  //   for(const product of DATA) {
-  //     await addDoc(productRef, product);
-  //   }
-
-  //   // addDoc(collection(this.firestore, 'products'), {
-  //   //   title: 'New Product',
-  //   //   price: 100,
-  //   //   stock: 10,
-  //   //   description: 'This is a new product',
-  //   //   images: ['https://i.dummyjson.com/data/products/30/1.jpg'],
-  //   //   thumbnail: 'https://i.dummyjson.com/data/products/30/1.jpg',
-  //   //   category: 'home-decoration',
-  //   //   brand: 'Golden',
-  //   //   discountPercentage: 2.92,
-  //   //   rating: 4.92,
-  //   // }).then((res) => {
-  //   //   console.log('Document written with ID: ', res);
-  //   // });
-  // }
-
-
-
 }

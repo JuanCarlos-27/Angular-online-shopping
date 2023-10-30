@@ -1,0 +1,74 @@
+<!-- <section
+  class="grid place-content-center h-full gap-4 bg-gray-800/20 rounded-lg p-3 border dark:border-gray-700"
+  *ngIf="totalProductsInCart() === 0"
+>
+  <h2 class="text-3xl text-center font-bold">
+    No hay productos en el carrito 👀
+  </h2>
+  <a
+    class="text-center text-xl underline text-blue-400"
+    [routerLink]="['/items']"
+    [queryParams]="{ search: '' }"
+  >
+    Ir a comprar
+  </a>
+</section> -->
+
+<section class="grid gap-5 grid-rows-[30rem,5rem]">
+  <article
+    class="grid grid-rows-[100px] overflow-auto gap-4 bg-gray-800/20 rounded-lg border dark:border-gray-700 p-7"
+    *ngIf="true"
+  >
+    <div
+      class="border border-black dark:border-gray-300 py-4 px-3 cursor-pointer hover:bg-gray-500/10"
+    >
+      <img
+        class="rounded-full w-16 h-16 object-cover border aspect-auto"
+        [src]="'https://i.dummyjson.com/data/products/8/thumbnail.jpg'"
+        [alt]="'Imagen del producto'"
+      />
+    </div>
+  </article>
+
+  <footer
+    class="flex mt-5 bg-gray-800/20 rounded-lg border dark:border-gray-700 py-4 px-7 justify-between"
+  >
+    <strong class="text-xl">Total a pagar:</strong>
+    <strong class="text-xl">{{
+      1000 | currency : "USD" : "symbol" : "0.0-1"
+    }}</strong>
+  </footer>
+
+  <div class="flex gap-6 relative">
+    <button
+      class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40 border-black border"
+    >
+      <ng-container *ngTemplateOutlet="goBackIcon" />
+    </button>
+    <button
+      class="flex-1 flex items-center justify-evenly bg-green-400 font-bold dark:text-black border border-black px-3 py-2 rounded-3xl hover:bg-green-500 transition-all text-lg"
+      role="article"
+    >
+      Pagar
+    </button>
+  </div>
+</section>
+
+<ng-template #goBackIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-arrow-back-up"
+    width="44"
+    height="44"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 14l-4 -4l4 -4" />
+    <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+  </svg>
+</ng-template>

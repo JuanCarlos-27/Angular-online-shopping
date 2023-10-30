@@ -1,12 +1,13 @@
-import { Component, inject,ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../search-input/search-input.component';
+import { CartButtonComponent } from '../cart-button/cart-button.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchInputComponent],
+  imports: [CommonModule, RouterLink, SearchInputComponent, CartButtonComponent],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
@@ -19,9 +20,9 @@ export class HeaderComponent {
 
     const { value } = this.searchInput.searchInput.nativeElement;
 
-    if(!value || !value.trim()) return
+    if (!value || !value.trim()) return
 
-    this.router.navigate(['/items'], { queryParams: { search: value }})
+    this.router.navigate(['/items'], { queryParams: { search: value } })
   }
 
 }
