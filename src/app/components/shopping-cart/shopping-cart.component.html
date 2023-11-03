@@ -1,58 +1,87 @@
-<!-- <section
-  class="grid place-content-center h-full gap-4 bg-gray-800/20 rounded-lg p-3 border dark:border-gray-700"
-  *ngIf="totalProductsInCart() === 0"
->
-  <h2 class="text-3xl text-center font-bold">
-    No hay productos en el carrito 👀
-  </h2>
-  <a
-    class="text-center text-xl underline text-blue-400"
-    [routerLink]="['/items']"
-    [queryParams]="{ search: '' }"
-  >
-    Ir a comprar
-  </a>
-</section> -->
+<ng-container *ngIf="totalProductsInCart() > 0; else noContent">
+  <ng-container *ngTemplateOutlet="content"> </ng-container>
+</ng-container>
 
-<section class="grid gap-5 grid-rows-[30rem,5rem]">
-  <article
-    class="grid grid-rows-[100px] overflow-auto gap-4 bg-gray-800/20 rounded-lg border dark:border-gray-700 p-7"
-    *ngIf="true"
+<ng-template #noContent>
+  <section
+    class="grid place-content-center h-full gap-4 bg-gray-800/20 rounded-lg p-3 border dark:border-gray-700"
+    *ngIf="totalProductsInCart() === 0"
   >
-    <div
-      class="border border-black dark:border-gray-300 py-4 px-3 cursor-pointer hover:bg-gray-500/10"
+    <h2 class="text-3xl text-center font-bold">
+      No hay productos en el carrito 👀
+    </h2>
+    <a
+      class="text-center text-xl underline text-blue-400"
+      [routerLink]="['/items']"
+      [queryParams]="{ search: '' }"
     >
-      <img
-        class="rounded-full w-16 h-16 object-cover border aspect-auto"
-        [src]="'https://i.dummyjson.com/data/products/8/thumbnail.jpg'"
-        [alt]="'Imagen del producto'"
-      />
-    </div>
-  </article>
+      Ir a comprar
+    </a>
+  </section>
+</ng-template>
 
-  <footer
-    class="flex mt-5 bg-gray-800/20 rounded-lg border dark:border-gray-700 py-4 px-7 justify-between"
-  >
-    <strong class="text-xl">Total a pagar:</strong>
-    <strong class="text-xl">{{
-      1000 | currency : "USD" : "symbol" : "0.0-1"
-    }}</strong>
-  </footer>
+<ng-template #content>
+  <section class="grid gap-5 grid-rows-[30rem,5rem]">
+    <article
+      class="flex flex-col overflow-auto gap-4 bg-gray-800/20 rounded-lg border dark:border-gray-700 p-7"
+    >
+      <header
+        class="hidden sm:grid sm:grid-cols-5 text-center justify-items-center items-center"
+      >
+        <strong>Imagen</strong>
+        <strong>Descripción</strong>
+        <strong>Cantidad</strong>
+        <strong>Precio Unitario</strong>
+        <strong>Acciones</strong>
+      </header>
+      <div
+        *ngFor="let product of productsInCart()"
+        class="grid grid-cols-1 sm:grid-cols-5 justify-items-center items-center gap-2 border border-black dark:border-gray-300 py-4 px-3 cursor-pointer hover:bg-gray-500/10"
+        (click)="redirectToProductDetail(product.id!, $event)"
+      >
+        <img
+          class="rounded-full w-16 h-16 object-cover border aspect-auto"
+          [src]="product.thumbnail"
+          [alt]="'Imagen del producto ' + product.title"
+        />
+        <h2 class="text-center">{{ product.title }}</h2>
+        <strong> Und. {{ product.quantity }} </strong>
+        <strong>
+          Precio: {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
+        </strong>
+        <button
+          (click)="deleteProductFormCart(product.id!)"
+          class="bg-red-500 rounded-full p-2"
+        >
+          <ng-container *ngTemplateOutlet="deleteIcon" />
+        </button>
+      </div>
+    </article>
 
-  <div class="flex gap-6 relative">
-    <button
-      class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40 border-black border"
+    <footer
+      class="flex mt-5 bg-gray-800/20 rounded-lg border dark:border-gray-700 py-4 px-7 justify-between"
     >
-      <ng-container *ngTemplateOutlet="goBackIcon" />
-    </button>
-    <button
-      class="flex-1 flex items-center justify-evenly bg-green-400 font-bold dark:text-black border border-black px-3 py-2 rounded-3xl hover:bg-green-500 transition-all text-lg"
-      role="article"
-    >
-      Pagar
-    </button>
-  </div>
-</section>
+      <strong class="text-xl">Total a pagar:</strong>
+      <strong class="text-xl">{{
+        totalPayment() | currency : "USD" : "symbol" : "0.0-1"
+      }}</strong>
+    </footer>
+
+    <article class="flex gap-6 relative">
+      <button
+        (click)="goBack()"
+        class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40 border-black border"
+      >
+        <ng-container *ngTemplateOutlet="goBackIcon" />
+      </button>
+      <button
+        class="flex-1 flex items-center justify-evenly bg-green-400 font-bold dark:text-black border border-black px-3 py-2 rounded-3xl hover:bg-green-500 transition-all text-lg"
+      >
+        Pagar
+      </button>
+    </article>
+  </section>
+</ng-template>
 
 <ng-template #goBackIcon>
   <svg
@@ -70,5 +99,27 @@
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M9 14l-4 -4l4 -4" />
     <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+  </svg>
+</ng-template>
+
+<ng-template #deleteIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-trash"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M4 7l16 0" />
+    <path d="M10 11l0 6" />
+    <path d="M14 11l0 6" />
+    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
   </svg>
 </ng-template>
