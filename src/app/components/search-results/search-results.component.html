@@ -29,7 +29,7 @@
 
     <ng-template #productsState>
       <article
-        *ngFor="let product of products()"
+        *ngFor="let product of products(); let i = index"
         class="grid grid-cols-2 gap-x-3 items-center justify-items-center border border-black dark:border-gray-300 py-4 px-3 hover:scale-105 transition-all duration-300 cursor-pointer hover:bg-gray-500/10"
         [routerLink]="['/items', product.id]"
       >
@@ -37,6 +37,7 @@
           class="rounded-full w-32 h-32 object-cover"
           [src]="product.thumbnail"
           [alt]="'Imagen del producto ' + product.title"
+          [loading]="i > 6 ? 'lazy' : 'eager'"
         />
         <div class="grid gap-2">
           <a class="text-xl font-bold" [routerLink]="['/items', product.id]">{{
