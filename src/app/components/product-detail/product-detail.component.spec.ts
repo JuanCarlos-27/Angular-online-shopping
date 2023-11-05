@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Firestore } from '@angular/fire/firestore';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 import { importProvidersFrom } from '@angular/core';
 
