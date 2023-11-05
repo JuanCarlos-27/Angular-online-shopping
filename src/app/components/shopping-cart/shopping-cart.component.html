@@ -7,14 +7,8 @@
     class="grid place-content-center h-full gap-4 bg-gray-800/20 rounded-lg p-3 border dark:border-gray-700"
     *ngIf="totalProductsInCart() === 0"
   >
-    <h2 class="text-3xl text-center font-bold">
-      No hay productos en el carrito 👀
-    </h2>
-    <a
-      class="text-center text-xl underline text-blue-400"
-      [routerLink]="['/items']"
-      [queryParams]="{ search: '' }"
-    >
+    <h2 class="text-3xl text-center font-bold">No hay productos en el carrito 👀</h2>
+    <a class="text-center text-xl underline text-blue-400" [routerLink]="['/items']" [queryParams]="{ search: '' }">
       Ir a comprar
     </a>
   </section>
@@ -22,12 +16,8 @@
 
 <ng-template #content>
   <section class="grid gap-5 grid-rows-[30rem,5rem]">
-    <article
-      class="flex flex-col overflow-auto gap-4 bg-gray-800/20 rounded-lg border dark:border-gray-700 p-7"
-    >
-      <header
-        class="hidden sm:grid sm:grid-cols-5 text-center justify-items-center items-center"
-      >
+    <article class="flex flex-col overflow-auto gap-4 bg-gray-800/20 rounded-lg border dark:border-gray-700 p-7">
+      <header class="hidden sm:grid sm:grid-cols-5 text-center justify-items-center items-center">
         <strong>Imagen</strong>
         <strong>Descripción</strong>
         <strong>Cantidad</strong>
@@ -47,34 +37,25 @@
         <h2 class="text-center">{{ product.title }}</h2>
         <strong> Und. {{ product.quantity }} </strong>
         <strong>
-          Precio: {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
+          {{ product.price | currency : "USD" : "symbol" : "0.0-1" }}
         </strong>
-        <button
-          (click)="deleteProductFormCart(product.id!)"
-          class="bg-red-500 rounded-full p-2"
-        >
+        <button (click)="deleteProductFormCart(product.id!)" class="bg-red-500 rounded-full p-2">
           <ng-container *ngTemplateOutlet="deleteIcon" />
         </button>
       </div>
     </article>
 
-    <footer
-      class="flex mt-5 bg-gray-800/20 rounded-lg border dark:border-gray-700 py-4 px-7 justify-between"
-    >
+    <footer class="flex mt-5 bg-gray-800/20 rounded-lg border dark:border-gray-700 py-4 px-7 justify-between">
       <strong class="text-xl">Total a pagar:</strong>
-      <strong class="text-xl">{{
-        totalPayment() | currency : "USD" : "symbol" : "0.0-1"
-      }}</strong>
+      <strong class="text-xl">{{ totalPayment() | currency : "USD" : "symbol" : "0.0-1" }}</strong>
     </footer>
 
     <article class="flex gap-6 relative">
-      <button
-        (click)="goBack()"
-        class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40 border-black border"
-      >
+      <button (click)="goBack()" class="text-4xl bg-white/10 rounded-full p-1 hover:bg-white/40 border-black border">
         <ng-container *ngTemplateOutlet="goBackIcon" />
       </button>
       <button
+        (click)="handlePayment()"
         class="flex-1 flex items-center justify-evenly bg-green-400 font-bold dark:text-black border border-black px-3 py-2 rounded-3xl hover:bg-green-500 transition-all text-lg"
       >
         Pagar

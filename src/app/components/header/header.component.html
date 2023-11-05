@@ -1,5 +1,7 @@
 <header class="flex gap-5 justify-between items-center">
-  <a class="text-4xl" routerLink="/">🛍️</a>
+  <a class="text-4xl" routerLink="/" *ngIf="!user()">🛍️</a>
+  <app-profile-dropdown *ngIf="user()" />
+
   <form (submit)="onSearch($event)" class="flex-1">
     <search-input />
   </form>

@@ -5,8 +5,10 @@ import { routes } from './app.routes';
 import { environment } from 'src/environments/environment.development';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from "@angular/fire/auth"
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 
 export const appConfig: ApplicationConfig = {
@@ -14,7 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom([
       provideFirebaseApp(() => initializeApp(environment.firebase)),
-      provideFirestore(() => getFirestore())
+      provideFirestore(() => getFirestore()),
+      provideAuth(() => getAuth()),
     ]),
     provideAnimations(),
     provideToastr({

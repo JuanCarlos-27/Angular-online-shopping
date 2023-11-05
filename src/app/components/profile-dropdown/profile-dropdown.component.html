@@ -1,0 +1,30 @@
+<img
+  type="button"
+  class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 cursor-pointer"
+  [src]="user()?.photoURL"
+  alt="Foto de perfil"
+  (click)="toggleMenu()"
+/>
+
+<div
+  class="z-10 absolute top-16 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+  [ngClass]="{ hidden: hiddeMenu() }"
+>
+  <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+    <div>{{ user()?.displayName }}</div>
+    <div class="font-medium truncate">{{ user()?.email }}</div>
+  </div>
+  <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+    <!-- <li>
+      <a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+    </li> -->
+  </ul>
+  <div class="py-1">
+    <a
+      (click)="logOut()"
+      class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+    >
+      Cerrar sesión
+    </a>
+  </div>
+</div>
