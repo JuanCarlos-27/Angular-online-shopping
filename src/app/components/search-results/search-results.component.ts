@@ -47,7 +47,7 @@ export default class SearchResultsComponent {
       const result = await this.productService.getProductsByQuery(this.term);
       this.products.set(result);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       this.isLoading = false;
     }

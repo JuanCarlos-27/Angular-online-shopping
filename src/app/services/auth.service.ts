@@ -43,7 +43,6 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
-      console.log("User credential", userCredential)
       this.router.navigate(['/items'])
     } catch (error: any) {
       console.error("Error iniciando sesión", error);
@@ -99,21 +98,6 @@ export class AuthService {
     const BASE_URL = 'https://ui-avatars.com/api/';
     const image = `${BASE_URL}?name=${name}`;
     return image;
-  }
-
-  register(email: string, password: string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        sendEmailVerification(userCredential.user).then(() => {
-          updateProfile(userCredential.user, {
-            displayName: 'John Doe',
-            photoURL: 'https://example.com/jane-q-user/profile.jpg',
-
-          }).then(() => {
-            console.log('User created!');
-          })
-        })
-      })
   }
 
   async logOut() {

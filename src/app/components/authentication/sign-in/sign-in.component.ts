@@ -17,8 +17,8 @@ export default class SignInComponent {
   private fb = inject(FormBuilder);
 
   public form: FormGroup = this.fb.group({
-    email: ['juang20133@gmail.com', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
-    password: ['123456', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   loginWithGoogle() {
@@ -32,9 +32,4 @@ export default class SignInComponent {
     const { email, password } = this.form.value;
     this.authService.loginWithEmail(email, password);
   }
-
-  async register(email: string, password: string) {
-    this.authService.register(email, password);
-  }
-
 }

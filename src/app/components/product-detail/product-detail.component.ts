@@ -46,7 +46,7 @@ export default class ProductDetailComponent implements OnInit {
       const response = await this.productService.getProductById(id);
       this.product.set(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       this.isLoading = false;
     }

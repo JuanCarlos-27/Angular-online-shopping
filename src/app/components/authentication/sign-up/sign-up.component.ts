@@ -19,10 +19,10 @@ export default class SignUpComponent {
   public loading = signal<boolean>(false);
 
   public form: FormGroup = this.fb.group({
-    name: ['Lupita Gonzalez', [Validators.required, Validators.minLength(3)]],
-    email: ['juang20133@gmail.com', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
-    password: ['123456', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['123456', [Validators.required, Validators.minLength(6)]]
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   async onSubmit(): Promise<void> {
